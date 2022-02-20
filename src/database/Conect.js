@@ -58,9 +58,9 @@ const port = '5432'
 
         insert_aviso: async(nome, conteudo_aviso)=> {
             try{
-
+                      
                      const id_coordenador = await db.query('SELECT usuarios.id_usuario FROM usuarios INNER JOIN coordenadores ON usuarios.id_usuario = coordenadores.id_coordenador WHERE usuarios.nome =' +nome+';')
-                     await db.query('INSERT INTO public.avisos(id_coordenador, conteudo_aviso)VALUES ('+id_coordenador+','+conteudo_aviso+');')
+                     await db.query('INSERT INTO avisos(id_coordenador, conteudo_aviso)VALUES ('+id_coordenador+','+conteudo_aviso+');')
                      return ('aviso publicado com sucesso')
                }
                catch(err){
@@ -85,12 +85,13 @@ const port = '5432'
              try{
                  await db.query('UPDATE avisos SET conteudo_aviso = '+conteudo_aviso+ ' WHERE id_aviso = '+id+';')
                  return('Conteudo atualizado com sucesso')
-             }
-             catch(err){
-                console.log(err)
-                return(err)
-            }
+               }
+                 catch(err){
+                 console.log(err)
+                 return(err)
+               }
         }
+        
 
     }
 
