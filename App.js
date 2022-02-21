@@ -6,6 +6,12 @@ const dotEnv = require('dotenv').config();
 const cors = require('cors');
 const modelAvisos = require('./src/models/Aviso');
 const modelUsuarios = require('./src/models/Usuario');
+const modelCursos = require('./src/models/Curso');
+const modelAlunos= require('./src/models/Aluno');
+const modelProfessores = require('./src/models/Professor');
+const modelCoordenadores = require('./src/models/Coordenador');
+
+//const curso = require('./src/models/Curso');
 app.use(express.json());
 app.use(cors());
 
@@ -18,7 +24,7 @@ app.listen(dotEnv.parsed.EXPRESS_PORT, () => {
 });
 
 app.get('/avisos', async (req, res) => {
-    res.send(await aviso.select());
+    res.send(await aviso.selectInnerJoin());
 });
 
 app.get('/aviso/:aviso_id', async (req, res) => {
@@ -57,8 +63,8 @@ app.get('/usuarios', async (req, res) => {
 });
 
 app.post('/usuario', async (req, res) => {
-    const { nome, email, senha } = req.body;
-    const result = await usuarios.insert(`nome, email, senha`, `'${nome}', '${email}', '${senha}'`);
+    const { nome, email} = req.body;
+    const result = await usuarios.insert(`nome, email`, `'${nome}', '${email}'`);
     res.send(result);
 });
 

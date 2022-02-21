@@ -17,6 +17,18 @@ class Model {
         }
     }
 
+    async selectInnerJoin() {
+        try{
+        const result = await dbClient.query('SELECT id_aviso, nome, id_coordenador, data_publicacao, conteudo_aviso FROM avisos INNER JOIN usuarios ON avisos.id_coordenador = usuarios.id_usuario;')
+        return(result.rows)
+        }
+        catch(err){
+            console.log(err)
+            return(err)
+        }
+    }
+
+
     async delete(whereParams = '') {
         try {
             const sqlQuery = whereParams !== '' ? `DELETE FROM ${this.table} WHERE ${whereParams}` : `DELETE FROM ${this.table}`;
